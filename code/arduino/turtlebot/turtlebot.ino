@@ -9,15 +9,41 @@ Robot turtlebot;
 void setup() 
 {
     turtlebot.initialize();   
-    Serial.begin(9600);
+    Serial.begin(BAUD_RATE);
     delay(3000);
-    
+    Serial.println("connected");
 }
 
 void loop() 
 {
-  
-    turtlebot.forward();
+  	if(Serial.available()){
+  		Serial.println("Command received");
+  		char command = Serial.read();
+
+  		switch(command){
+  			case COMMAND_FORWARD:
+  				Serial.println("moving forward");
+  				turtlebot.forward();
+  				break;
+  			case COMMAND_BACKWARD:
+  				Serial.println("moving backward");
+  				turtlebot.backward();
+  				break;
+  			case COMMAND_LEFT:
+  				Serial.println("moving left");
+  				turtlebot.left();
+  				break;
+  			case COMMAND_RIGHT:
+  				Serial.println("moving right");
+  				turtlebot.right();
+  				break;
+  			default:
+  			Serial.println("unkown command");
+
+  		}
+
+  	}
+    
     //delay(500);
    
   

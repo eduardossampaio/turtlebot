@@ -32,5 +32,12 @@
 #define HIP_MOVEMENT_AMPLITUDE      15
 #define HIP_MOVEMENT_AMPLITUDE_LONG 25
 
+//commands
+#define BAUD_RATE 9600
+#define COMMAND_FORWARD		'f'
+#define COMMAND_BACKWARD	'b'
+#define COMMAND_LEFT		'l'
+#define COMMAND_RIGHT		'r'
+
 
 #endif
