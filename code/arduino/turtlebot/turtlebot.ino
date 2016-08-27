@@ -37,6 +37,14 @@ void loop()
   				Serial.println("moving right");
   				turtlebot.right();
   				break;
+        case COMMAND_LED_ON:
+          Serial.println("LED ON");
+          turtlebot.led_on();
+          break;
+        case COMMAND_LED_OFF:
+          Serial.println("LED OFF");
+          turtlebot.led_off();          
+          break;
   			default:
   			Serial.println("unkown command");
 

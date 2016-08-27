@@ -36,6 +36,8 @@ public:
     left_back.attach_pins(LEFT_BACK_HIP_PIN,LEFT_BACK_LEG_PIN);
     left_back.set_direction(DIR_LEFT);
     left_back.set_place(PLACE_BACK);
+
+    pinMode(LED_PIN,OUTPUT);
     
     delay(300);
     
@@ -149,6 +151,7 @@ public:
     left_front.hip_home();
     left_front.leg_home();    
   }
+  
 
   void right()
   {
@@ -171,30 +174,17 @@ public:
     left_back.up();
     left_back.hip_home();
     left_back.leg_home();  
-    /*
-    right_front.up();
-    left_back.up();
-    idle();
-    right_back.forward();
-    left_front.backward();
-    idle();
-    right_front.leg_home();
-    left_back.leg_home();
-
-    right_back.up();
-    right_back.hip_home();
-    right_back.leg_home();
-
-    idle();
-
-    left_front.up();
-    left_front.hip_home();
-    left_front.leg_home();    
-    */
 
   }
 
-
+  void led_on()
+  {
+    digitalWrite(LED_PIN,HIGH);
+  }
+  void led_off()
+  {
+    digitalWrite(LED_PIN,LOW);
+  }
   void test()
   {    
     right_front.forward();

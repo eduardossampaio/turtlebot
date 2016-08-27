@@ -14,6 +14,8 @@
 #define LEFT_FRONT_LEG_PIN 12
 #define LEFT_FRONT_HIP_PIN 11
 
+#define LED_PIN           3
+
 //initial position
 #define LEFT_BACK_HIP_INIT_POS 87
 #define LEFT_BACK_LEG_INIT_POS 90
@@ -38,6 +40,8 @@
 #define COMMAND_BACKWARD	'b'
 #define COMMAND_LEFT		'l'
 #define COMMAND_RIGHT		'r'
+#define COMMAND_LED_ON    'o'
+#define COMMAND_LED_OFF    'v'
 
 
 #endif
