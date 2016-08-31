@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/connect_to_device"
+        android:id="@+id/menu_connect_to_device" />
+    <item android:title="@string/disconnect"
+        android:visible="false"
+        android:id="@+id/menu_disconnect" />
+    <item
+        app:showAsAction="always"
+        android:icon="@drawable/ic_settings"
+        android:id="@+id/menu_configuration" />
+
+    <item android:title="@string/about"
+        android:id="@+id/menu_about" />
+</menu>

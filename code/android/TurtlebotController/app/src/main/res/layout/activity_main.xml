@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.apps.esampaio.turtlebot.view.acttivities.MainActivity">
+
+    <com.jmedeisis.bugstick.Joystick
+            android:id="@+id/joystick"
+            android:layout_width="@dimen/joystick_size"
+            android:layout_height="@dimen/joystick_size"
+            android:background="@drawable/circle_big"
+            tools:layout_editor_absoluteX="55dp"
+            tools:layout_editor_absoluteY="55dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="36dp">
+
+
+            <View
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/circle" />
+
+        </com.jmedeisis.bugstick.Joystick>
+
+    <TextView
+        android:text="@string/movement_joystick"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/joystick"
+        android:layout_alignStart="@+id/joystick"
+        android:id="@+id/movement_joystick_label"
+        android:layout_alignEnd="@+id/joystick" />
+
+    <TextView
+        android:text="@string/head_movement"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/joystick_2"
+        android:layout_alignStart="@+id/joystick_2"
+        android:id="@+id/head_movement_label"
+        android:layout_alignEnd="@+id/joystick_2" />
+
+    <com.jmedeisis.bugstick.Joystick android:id="@+id/joystick_2"
+        android:layout_width="@dimen/joystick_size"
+        android:layout_height="@dimen/joystick_size"
+        android:background="@drawable/circle_big"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="55dp"
+        android:layout_marginEnd="26dp"
+        android:layout_alignTop="@+id/joystick"
+        android:layout_alignParentEnd="true">
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/circle" />
+
+    </com.jmedeisis.bugstick.Joystick>
+
+    <include
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/buttons_panel"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

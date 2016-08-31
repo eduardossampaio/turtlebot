@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceCategory android:title="commands">
+
+
+    <EditTextPreference
+        android:defaultValue="f"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="f"
+        android:title="@string/configuration_forward_command"
+        android:key="configuration_forward_command" />
+
+    <EditTextPreference
+        android:defaultValue="b"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="b"
+        android:title="@string/configuration_backward_command"
+        android:key="configuration_backward_command" />
+
+    <EditTextPreference
+        android:defaultValue="l"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="l"
+        android:title="@string/configuration_left_command"
+        android:key="configuration_left_command" />
+
+        <EditTextPreference
+            android:defaultValue="r"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="r"
+            android:title="@string/configuration_right_command"
+            android:key="configuration_right_command" />
+
+        <EditTextPreference
+        android:defaultValue="o"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="o"
+        android:title="@string/configuration_leds_on_command"
+        android:key="configuration_leds_on_command" />
+
+    <EditTextPreference
+        android:defaultValue="v"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="v"
+        android:title="@string/configuration_leds_off_command"
+        android:key="configuration_leds_off_command" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Communication">
+
+    <EditTextPreference
+        android:defaultValue="1200"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="1200"
+        android:title="@string/configuration_delay_time"
+        android:inputType="number"
+        android:key="configuration_delay_time" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:title="@string/configuration_enable_on_start"
+            android:key="configuration_enable_on_start" />
+    </PreferenceCategory>
+</PreferenceScreen>

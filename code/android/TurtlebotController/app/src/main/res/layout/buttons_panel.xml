@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ToggleButton
+        android:layout_marginTop="5dp"
+        android:text="@string/led_toggle"
+        android:textOn="@string/led_toggle_on"
+        android:textOff="@string/led_toggle_off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/led_button" />
+
+    <ToggleButton
+        android:layout_marginTop="5dp"
+        android:text="@string/auto"
+        android:textOn="@string/auto_on"
+        android:textOff="@string/auto_off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/auto_button" />
+
+
+</LinearLayout>

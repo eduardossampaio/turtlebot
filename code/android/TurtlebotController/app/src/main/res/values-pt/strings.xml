@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Turtlebot Controller</string>
+    <string name="movement_joystick">movement</string>
+    <string name="led_toggle">LED</string>
+    <string name="led_toggle_on">LED ON</string>
+    <string name="led_toggle_off">LED OFF</string>
+    <string name="connect_to_device">Connect to device</string>
+    <string name="about">About</string>
+    <string name="head_movement">Head movement</string>
+    <string name="dialog_no_devices_found">No devices found</string>
+    <string name="device_not_selected">Device not selected</string>
+    <string name="device_selected">Device selected:</string>
+    <string name="dialog_list_device_title">Select a device</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="auto">Automatic</string>
+    <string name="auto_on">Automatic On</string>
+    <string name="auto_off">Automatic Off</string>
+    <string name="error_open_connection">Error while open connection</string>
+    <string name="dialog_connecting_message">Connecting to device...</string>
+    <string name="configuration_forward_command">Command forward</string>
+    <string name="configuration_left_command">Command left</string>
+    <string name="configuration_right_command">Command right</string>
+    <string name="configuration_leds_on_command">Command leds on</string>
+    <string name="configuration_leds_off_command">Command leds off</string>
+    <string name="configuration_delay_time">Command\'s delay time</string>
+    <string name="configuration_enable_on_start">Enable bluetooth on start</string>
+</resources>
