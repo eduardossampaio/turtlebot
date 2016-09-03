@@ -6,7 +6,9 @@ import android.bluetooth.BluetoothSocket;
 import com.apps.esampaio.turtlebot.core.connection.Connection;
 import com.apps.esampaio.turtlebot.core.devices.Device;
 import com.apps.esampaio.turtlebot.core.devices.DeviceBluetooth;
+import com.apps.esampaio.turtlebot.core.log.Log;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
@@ -34,10 +36,12 @@ public class BluetoothConnection implements Connection {
 
         inputStream = socket.getInputStream();
         outputStream = socket.getOutputStream();
+
+        connected = true;
     }
 
     @Override
-    public void disconnect() throws Exception{
+    public void disconnect() throws Exception {
         outputStream.close();
         inputStream.close();
         socket.close();
@@ -46,18 +50,32 @@ public class BluetoothConnection implements Connection {
 
     @Override
     public boolean isConnected() {
-        return false;
+        return connected;
     }
 
     @Override
     public void send(byte[] data) throws Exception {
-        outputStream.write(data);
+        try {
+            outputStream.write(data);
+        } catch (IOException e) {
+            Log.error("Error while sending: ", e);
+            connected = false;
+        }
     }
 
     @Override
     public byte[] receive() throws Exception {
-        byte [] buffer = new byte[64];
-        inputStream.read(buffer);
-        return buffer;
+        try {
+
+            byte[] buffer = new byte[8];
+            for(int i=0;i<buffer.length;i++)
+                buffer[i]='\0';
+            int bytesRead = inputStream.read(buffer);
+            return buffer;
+        } catch (IOException e) {
+            Log.error("Error while receiving: ", e);
+            connected = false;
+            return null;
+        }
     }
 }

@@ -1,6 +1,15 @@
 #ifndef CONSTANTS
 #define CONSTANTS
 
+//doll head
+#define HAVE_DOLL_HEAD //comment if yout robot don't have dool's head (or another rotable part)
+
+#ifdef HAVE_DOLL_HEAD
+#define DOLL_HEAD_PIN 4
+#define DOLL_HEAD_INIT_ANGLE 90
+
+#endif
+
 ///pins
 #define	RIGHT_BACK_LEG_PIN 6
 #define RIGHT_BACK_HIP_PIN 5
@@ -30,7 +39,7 @@
 #define RIGHT_FRONT_LEG_INIT_POS 90
 
 //movement values
-#define LEG_MOVEMENT_AMPLITUDE 		25
+#define LEG_MOVEMENT_AMPLITUDE 		  25
 #define HIP_MOVEMENT_AMPLITUDE      15
 #define HIP_MOVEMENT_AMPLITUDE_LONG 25
 
@@ -43,5 +52,26 @@
 #define COMMAND_LED_ON    'o'
 #define COMMAND_LED_OFF    'v'
 
-
+#ifdef HAVE_DOLL_HEAD
+#define COMMAND_DOLL_RIGHT    'q'
+#define COMMAND_DOLL_LEFT    'e'
 #endif
+
+//resposnses
+#define RESPONSE_UNKNOW		'U'
+#define RESPONSE_FORWARD	'F'
+#define RESPONSE_BACKWARD	'B'
+#define RESPONSE_LEFT		  'L'
+#define RESPONSE_RIGHT		'R'
+#define RESPONSE_LED_ON    	'O'
+#define RESPONSE_LED_OFF    'V'
+
+#ifdef HAVE_DOLL_HEAD
+#define RESPONSE_DOLL_RIGHT   'Q'
+#define RESPONSE_DOLL_LEFT    'E'
+#endif
+
+#endif //CONSTANTS_H
+
+
+

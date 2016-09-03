@@ -22,6 +22,7 @@ import com.apps.esampaio.turtlebot.core.devices.Device;
 import com.apps.esampaio.turtlebot.core.devices.DeviceFactory;
 import com.apps.esampaio.turtlebot.core.log.Log;
 import com.apps.esampaio.turtlebot.core.robots.Turtlebot;
+import com.apps.esampaio.turtlebot.view.acttivities.listeners.HeadMovementJoystickListener;
 import com.apps.esampaio.turtlebot.view.acttivities.listeners.MovementJoystickListener;
 import com.apps.esampaio.turtlebot.view.dialogs.DialogBuilder;
 import com.apps.esampaio.turtlebot.view.dialogs.ListDeviceDialog;
@@ -34,8 +35,11 @@ public class MainActivity extends AppCompatActivity {
     private Device selectedDevice = null;
     private Turtlebot turtlebot = null;
     private MovementJoystickListener movementJoystickListener;
+    private HeadMovementJoystickListener headMovementJoystickListener;
     private ToggleButton ledsButton;
-
+    private ToggleButton automaticButton;
+    private Joystick joystick;
+    private Joystick joystickHead;
 
 
     @Override
@@ -45,12 +49,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         movementJoystickListener = new MovementJoystickListener();
+        headMovementJoystickListener = new HeadMovementJoystickListener();
 
-        Joystick joystick = (Joystick) findViewById(R.id.joystick);
+        joystick = (Joystick) findViewById(R.id.joystick);
         joystick.setJoystickListener(movementJoystickListener);
+
+        joystickHead = (Joystick) findViewById(R.id.joystick_head);
+        joystickHead.setJoystickListener(headMovementJoystickListener);
+
         refreshActionBar();
         ledsButton = (ToggleButton) findViewById(R.id.led_button);
-
+        automaticButton = (ToggleButton) findViewById(R.id.auto_button);
         ledsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -72,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         });
         if(savedInstanceState == null)
             checkBluetooth();
+        disableViews();
 
     }
 
@@ -89,6 +99,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void disableViews(){
+        ledsButton.setEnabled(false);
+        automaticButton.setEnabled(false);
+        joystick.setEnabled(false);
+        joystickHead.setEnabled(false);
+    }
+    private void enableViews(){
+        ledsButton.setEnabled(true);
+        automaticButton.setEnabled(true);
+        joystick.setEnabled(true);
+        joystickHead.setEnabled(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -137,17 +160,16 @@ public class MainActivity extends AppCompatActivity {
         DialogBuilder.createSimpleAlertDialog(this,getString(R.string.app_name),getString(R.string.about_message));
     }
 
-    private void connect(Device device) {
-        try {
+    private void connect(Device device) throws Exception{
+
             Log.info("Connecting to device: "+device.getName());
             Connection connection = ConnectionFactory.createConnection(device);
             connection.connect(device);
             turtlebot = new Turtlebot(connection);
             movementJoystickListener.setTurtlebot(turtlebot);
+            headMovementJoystickListener.setTurtlebot(turtlebot);
             Log.info("connected");
-        } catch (Exception e) {
-            DialogBuilder.createSimpleErrorDialog(this, getString(R.string.error_open_connection), e);
-        }
+
     }
 
     private void disconnect() {
@@ -156,7 +178,9 @@ public class MainActivity extends AppCompatActivity {
             this.turtlebot.shutdown();
             this.turtlebot = null;
             movementJoystickListener.setTurtlebot(null);
+            headMovementJoystickListener.setTurtlebot(null);
             refreshActionBar();
+            disableViews();
             Log.info("disconnected");
         } catch (Exception e) {
             Log.error("Error while disconnecting",e);
@@ -177,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         selectedDevice = devices.get(position);
-//                        connect(selectedDevice);
                         new LoadingAsyncTask().execute(selectedDevice);
                     }
                 });
@@ -189,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class LoadingAsyncTask extends AsyncTask<Device,Void,Void>{
+    private class LoadingAsyncTask extends AsyncTask<Device,Void,Exception>{
         private ProgressDialog dialog;
         @Override
         protected void onPreExecute() {
@@ -198,16 +221,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Device... params) {
+        protected Exception doInBackground(Device... params) {
             Device device = params[0];
-            connect(device);
+            try{
+                connect(device);
+            } catch (Exception e) {
+                return e;
+            }
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(Exception e) {
             dialog.dismiss();
+            if(e != null){
+                DialogBuilder.createSimpleErrorDialog(MainActivity.this, getString(R.string.error_open_connection), e);
+            }
             refreshActionBar();
+            enableViews();
         }
     }
 

@@ -7,7 +7,7 @@
       #include "WProgram.h"
     #endif
 #include "Leg.h"
-
+#include "constants.h"
 typedef struct s_Robot{
   
 private:
@@ -15,6 +15,10 @@ private:
     Leg left_back;
     Leg right_front;
     Leg right_back;
+#ifdef HAVE_DOLL_HEAD
+    Servo doll_head;
+    int doll_head_angle;
+#endif
   
 public:
   
@@ -46,6 +50,12 @@ public:
   
     right_front.init_pos(RIGHT_FRONT_HIP_INIT_POS,RIGHT_FRONT_LEG_INIT_POS);
     right_back.init_pos(RIGHT_BACK_HIP_INIT_POS,RIGHT_BACK_LEG_INIT_POS);
+
+#ifdef HAVE_DOLL_HEAD
+    doll_head.attach(DOLL_HEAD_PIN);
+    doll_head.write(DOLL_HEAD_INIT_ANGLE);
+    doll_head_angle = DOLL_HEAD_INIT_ANGLE;
+#endif
    
   }
 
@@ -185,6 +195,25 @@ public:
   {
     digitalWrite(LED_PIN,LOW);
   }
+   void doll_head_right()
+  {
+      int angle = doll_head_angle;
+      angle+=5;
+      if(angle>180)
+        angle = 180;
+      doll_head.write(angle);
+      doll_head_angle=angle;
+  }
+  void doll_head_left()
+  {
+      int angle = doll_head_angle;
+      angle-=5;
+      if(angle<0)
+        angle = 0;
+      doll_head.write(angle);
+      doll_head_angle=angle;
+  }
+  
   void test()
   {    
     right_front.forward();

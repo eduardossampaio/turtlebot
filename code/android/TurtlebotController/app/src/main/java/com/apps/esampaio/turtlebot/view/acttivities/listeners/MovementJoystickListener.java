@@ -12,12 +12,13 @@ import com.jmedeisis.bugstick.JoystickListener;
  */
 
 public class MovementJoystickListener implements JoystickListener {
-    private static final int DEGRESS_RANGE = 20;
-    private Turtlebot turtlebot;
 
-    private Counter counter = new Counter();
-    private int direction;
-    private boolean isToMove;
+    protected static int DEGRESS_RANGE = 20;
+    protected Turtlebot turtlebot;
+
+    protected Counter counter = new Counter();
+    protected int direction;
+    protected boolean isToMove;
 
     @Override
     public void onDown() {
@@ -37,7 +38,7 @@ public class MovementJoystickListener implements JoystickListener {
             direction =2;
         } else if (degrees >= 0 - DEGRESS_RANGE && degrees <= 0 + DEGRESS_RANGE) {
             direction =3;
-        } else if (degrees >= 180 - DEGRESS_RANGE || (degrees >= -180 + DEGRESS_RANGE && degrees <= -180 - DEGRESS_RANGE)) {
+        } else if (degrees >= 180 - DEGRESS_RANGE || (degrees <= -180 + DEGRESS_RANGE)) {
             direction =4;
         }
         if(isToMove == false) {
@@ -71,14 +72,14 @@ public class MovementJoystickListener implements JoystickListener {
         counter.stopCount();
         isToMove = false;
     }
-    private boolean canMove(){
-        if ( counter.getCount() >= 700){
+    protected boolean canMove(){
+        if ( counter.getCount() >= 50){
             counter.restartCount();
             return true;
         }
         return false;
     }
-    private void forward(){
+    protected void forward(){
         if(canMove()) {
             Log.info("FORWARD");
             if(turtlebot !=null) {
@@ -90,7 +91,7 @@ public class MovementJoystickListener implements JoystickListener {
             }
         }
     }
-    private void backward(){
+    protected void backward(){
         if(canMove()) {
             Log.info("BACKWARD");
             try {
@@ -100,7 +101,7 @@ public class MovementJoystickListener implements JoystickListener {
             }
         }
     }
-    private void left(){
+    protected void left(){
         if(canMove()) {
             Log.info( "LEFT");
             try {
@@ -110,7 +111,7 @@ public class MovementJoystickListener implements JoystickListener {
             }
         }
     }
-    private void right(){
+    protected void right(){
         if(canMove()) {
             Log.info("RIGHT");
             try {

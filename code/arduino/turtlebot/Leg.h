@@ -7,6 +7,7 @@
       #include "WProgram.h"
     #endif
 #include "Leg.h"
+#include "ServoMotor.h"
 
 //direction of leg
 #define DIR_LEFT    1
@@ -14,9 +15,6 @@
 //place in robot
 #define PLACE_FRONT 3
 #define PLACE_BACK  4
-
-//#define SMOOTH_STEP 2
-
 
 /**
 * The leg of robot, control the servo motors
@@ -172,7 +170,8 @@ typedef struct s_Leg{
   {
     return hip_angle;
   }
-  
+
+ 
   
   
 }Leg;

@@ -1,6 +1,9 @@
 package com.apps.esampaio.turtlebot.core.robots;
 
+
+
 import com.apps.esampaio.turtlebot.core.connection.Connection;
+import com.apps.esampaio.turtlebot.core.log.Log;
 
 /**
  * Created by eduardo on 28/08/2016.
@@ -10,18 +13,61 @@ public class Turtlebot {
 
     private Connection connection;
 
+    private class Command{
+        private String command;
+        private String response;
+
+        private Command(String command,String response){
+            this.command = command;
+            this.response = response;
+        }
+    }
+    private Thread receiveThread;
+
     //TODO ver das configurações
-    private String forwardCommand   = "f";
-    private String backwardCommand  = "b";
-    private String leftCommand      = "l";
-    private String rightCommand     = "r";
-    private String ledsOnCommand    = "o";
-    private String ledsOffCommand   = "v";
+    private Command commandForward          = new Command("f","F");
+    private Command commandBackward         = new Command("b","B");
+    private Command commandLeft             = new Command("l","L");
+    private Command commandRight            = new Command("r","R");
+    private Command commandLedsOn           = new Command("o","O");
+    private Command commandLedsOff          = new Command("v","V");
+    private Command commandDollHeadLeft     = new Command("q","Q");
+    private Command commandDollHeadRight    = new Command("e","E");
 
+    private Command lasCommand;
 
-    public Turtlebot(Connection connection){
+    public Turtlebot(final Connection connection){
         if(connection!= null) {
             this.connection = connection;
+            receiveThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        while (connection.isConnected()) {
+                            receiveCommands();
+                        }
+                    }catch (Exception e){
+                        Log.error("Error while receiving commands",e);
+                    }
+                }
+            });
+            receiveThread.start();
+        }
+    }
+    private void receiveCommands(){
+        try {
+            byte [] data = this.connection.receive();
+            if(data != null && data.length>0) {
+                StringBuilder sb = new StringBuilder();
+                for (byte b : data) {
+                    sb.append(String.format("%02X ", b));
+                }
+                Log.info("received: [" + data.length + "]: " + sb.toString());
+                if(lasCommand != null && lasCommand.response.charAt(0)==data[0])
+                    lasCommand = null;
+            }
+        }catch (Exception e){
+            Log.error("Error while receiving ",e);
         }
     }
     public void shutdown() throws Exception{
@@ -31,39 +77,36 @@ public class Turtlebot {
     }
 
     public void forward() throws Exception{
-        if(connection!= null) {
-            connection.send(forwardCommand.getBytes());
-        }
+        sendCommand(commandForward);
     }
     public void backward() throws Exception{
-        if(connection!= null) {
-            connection.send(backwardCommand.getBytes());
-        }
+        sendCommand(commandBackward);
     }
     public void left() throws Exception{
-        if(connection!= null) {
-            connection.send(leftCommand.getBytes());
-        }
+        sendCommand(commandLeft);
     }
     public void right()throws Exception{
-        if(connection!= null) {
-            connection.send(rightCommand.getBytes());
-        }
+        sendCommand(commandRight);
     }
-    public void headLeft(){
-
+    public void headLeft()throws Exception{
+        sendCommand(commandDollHeadLeft);
     }
-    public void headRight(){
-
+    public void headRight()throws Exception{
+        sendCommand(commandDollHeadRight);
     }
     public void ledsOn() throws Exception{
-        if(connection!= null) {
-            connection.send(ledsOnCommand.getBytes());
-        }
+        sendCommand(commandLedsOn);
     }
     public void ledsOff() throws Exception{
+        sendCommand(commandLedsOff);
+    }
+
+    private void sendCommand(Command command) throws Exception{
         if(connection!= null) {
-            connection.send(ledsOffCommand.getBytes());
+            if(lasCommand== null) {
+                lasCommand = command;
+                connection.send(lasCommand.command.getBytes());
+            }
         }
     }
 
