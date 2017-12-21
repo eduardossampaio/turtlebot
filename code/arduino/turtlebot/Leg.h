@@ -7,8 +7,9 @@
       #include "WProgram.h"
     #endif
 #include "Leg.h"
-#include "ServoMotor.h"
 
+
+#include "ServoMotor.h"
 //direction of leg
 #define DIR_LEFT    1
 #define DIR_RIGHT   2
@@ -24,8 +25,8 @@
 typedef struct s_Leg{
   private:   
   public:
-    Servo hip;
-    Servo leg;
+    ServoMotor hip;
+    ServoMotor leg;
     int hip_angle;
     int hip_init_pos;
     int leg_angle;
@@ -69,38 +70,14 @@ typedef struct s_Leg{
 
   void write_leg(int angle)
   {
-    if(leg_angle < angle){
-      for(int i=leg_angle; i<=angle; i+=5)
-      {
-        leg.write(i);
-        delay(5);
-      }
-    }else{
-      for(int i=leg_angle; i>=angle; i-=5)
-      {
-        leg.write(i);
-        delay(5);
-      }
-    }
-    leg_angle = angle;    
+    leg_angle = angle; 
+    leg.write(angle);
   }
 
   void write_hip(int angle)
   {
-     if(hip_angle < angle){
-      for(int i=hip_angle; i<=angle; i+=3)
-      {
-        hip.write(i);
-        delay(5);
-      }
-    }else{
-      for(int i=hip_angle; i>=angle; i-=3)
-      {
-        hip.write(i);
-        delay(5);
-      }
-    }     
     hip_angle = angle;    
+    hip.write(angle);
   }
  
   void forward()
@@ -171,8 +148,6 @@ typedef struct s_Leg{
     return hip_angle;
   }
 
- 
-  
   
 }Leg;
 

@@ -16,7 +16,7 @@ private:
     Leg right_front;
     Leg right_back;
 #ifdef HAVE_DOLL_HEAD
-    Servo doll_head;
+    ServoMotor doll_head;
     int doll_head_angle;
 #endif
   

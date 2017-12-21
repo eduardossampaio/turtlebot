@@ -1,13 +1,9 @@
 #include <Servo.h>
-#include "Tlc5940.h"
-#include "tlc_servos.h"
 
 #include "constants.h"
 #include "ServoMotor.h"
 #include "Leg.h"
 #include "Robot.h"
-
-
 
 Robot turtlebot;
 
@@ -16,6 +12,7 @@ void setup()
     turtlebot.initialize();   
     Serial.begin(BAUD_RATE);
     delay(3000);   
+  Serial.println("iniciando");  
 }
 
 void respond(char response){
@@ -24,27 +21,27 @@ void respond(char response){
 
 void loop() 
 {
-  	if(Serial.available()){
-  		
-  		char command = Serial.read();
+    if(Serial.available()){
+      
+      char command = Serial.read();
 
-  		switch(command){
-  			case COMMAND_FORWARD:  		
-  				turtlebot.forward();
+      switch(command){
+        case COMMAND_FORWARD:     
+          turtlebot.forward();
           respond(RESPONSE_FORWARD);
-  				break;
-  			case COMMAND_BACKWARD:  			
-  				turtlebot.backward();
+          break;
+        case COMMAND_BACKWARD:        
+          turtlebot.backward();
           respond(RESPONSE_BACKWARD);
-  				break;
-  			case COMMAND_LEFT:  				
-  				turtlebot.left();
+          break;
+        case COMMAND_LEFT:          
+          turtlebot.left();
           respond(RESPONSE_LEFT);
-  				break;
-  			case COMMAND_RIGHT:  				
-  				turtlebot.right();
+          break;
+        case COMMAND_RIGHT:         
+          turtlebot.right();
           respond(RESPONSE_RIGHT);
-  				break;
+          break;
         case COMMAND_LED_ON:          
           turtlebot.led_on();
            respond(RESPONSE_LED_ON);
@@ -63,12 +60,9 @@ void loop()
           respond(RESPONSE_DOLL_LEFT);
           break;
 #endif
-  			default:
-  			  break;
+        default:
+          break;
 
-  		}
-
-
-  	}
-            
+      }
+    }
 }

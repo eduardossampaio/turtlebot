@@ -6,7 +6,19 @@
 
 #ifdef HAVE_DOLL_HEAD
 #define DOLL_HEAD_PIN 4
+
 #define DOLL_HEAD_INIT_ANGLE 90
+
+#endif
+
+#define HAVE_PCA9685 //uncomment if are using PCA9685
+
+#ifdef HAVE_PCA9685
+
+//#define MIN_PULSE_WIDTH       650
+//#define MAX_PULSE_WIDTH       2350
+#define DEFAULT_PULSE_WIDTH   1500
+#define FREQUENCY             50
 
 #endif
 
